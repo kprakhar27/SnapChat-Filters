@@ -24,14 +24,14 @@ nose = nose_cascade.detectMultiScale(img,1.3,5)
 
 # set dimension
 x,y,w,h = eyes[0]
-width = int(1.1 * glasses.shape[1] * w / glasses.shape[1])
-height = int(1.1 * glasses.shape[0] * w / glasses.shape[1])
+width = int(glasses.shape[1] * w / glasses.shape[1])
+height = int(glasses.shape[0] * w / glasses.shape[1])
 dim = (width, height)
 # resize filter
 glasses = cv2.resize(glasses, dim, interpolation = cv2.INTER_AREA)
 # Add offset
-y1, y2 = y-int(y*0.05), y-int(y*0.05)+glasses.shape[0]
-x1, x2 = x-int(x*0.05), x-int(x*0.05)+glasses.shape[1]
+y1, y2 = y, y+glasses.shape[0]
+x1, x2 = x, x+glasses.shape[1]
 # Remove alpha channel from filter
 alpha_s = glasses[:, :, 3] / 255.0
 alpha_l = 1.0 - alpha_s
