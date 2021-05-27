@@ -1,6 +1,7 @@
 # Import Libraries
 import cv2
 import numpy as np
+import pandas as pd
 
 # Input the name of the person
 file_name = input('Enter the name of the file: ')
@@ -56,9 +57,13 @@ alpha_l = 1.0 - alpha_s
 for c in range(0, 3):
     img[y1:y2, x1:x2, c] = (alpha_s * mustache[:, :, c] + alpha_l * img[y1:y2, x1:x2, c])
 
-# Display the video output
+# Display the img output
 cv2.imshow('Frame', img)
-cv2.imwrite('images/test.jpg',img)
+
+frame = np.array(img).flatten()
+frame = frame.reshape((-1,3))
+pd.DataFrame(frame,  columns=['Channel 1','Channel 2', 'Channel 3']).to_csv('./Prediction.csv', index= False)
+
 
 # Release all system resources used
 cv2.waitKey(0)
